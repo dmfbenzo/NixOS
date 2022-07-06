@@ -1,38 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-
-class noid
-{
-public:
-  noid();
-  ~noid();
-  int saySomething();
-};
-
-struct noid_lst
-{
-  noid *t_noid;
-  noid *n_noid;
-};
-
-
-noid::noid()
-{
-  
-};
-noid::~noid()
-{
-};
-
-int noid::saySomething()
-{
-
-  printf("hi.\r\n");
-  
-  return 0;
-
-};
+#include "noid.h"
 
 class App{
 public:
