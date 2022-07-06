@@ -2,6 +2,25 @@ include <stdio.h>
 #include <unistd.h>
 
 
+class noid
+{
+  noid();
+  ~noid();
+  int saySomething();
+};
+
+noid::noid()
+{
+  
+};
+noid::~noid()
+{
+};
+
+int noid::saySomething()
+{
+};
+
 class App{
 public:
   App();
@@ -20,8 +39,9 @@ App::~App()
 };
 
 void App::start()
-  {
-  };
+{
+  mainloop();
+};
 
 int App::mainloop()
 {
