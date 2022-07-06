@@ -1,13 +1,21 @@
-include <stdio.h>
+#include <stdio.h>
 #include <unistd.h>
 
 
 class noid
 {
+public:
   noid();
   ~noid();
   int saySomething();
 };
+
+struct noid_lst
+{
+  noid *t_noid;
+  noid *n_noid;
+};
+
 
 noid::noid()
 {
@@ -19,6 +27,11 @@ noid::~noid()
 
 int noid::saySomething()
 {
+
+  printf("hi.\r\n");
+  
+  return 0;
+
 };
 
 class App{
@@ -28,6 +41,8 @@ public:
   void start();
 private:
   int mainloop();
+
+  static noid_lst *noids = 0;
 };
 
 App::App()
@@ -45,6 +60,19 @@ void App::start()
 
 int App::mainloop()
 {
+  int b_while = 0;
+
+  int ticks = 0;
+  while(b_while == 0)
+    {
+      ticks++;
+      sleep(1);
+
+      if(ticks == 30)
+	{
+	  b_while = 1;
+	}
+    }
   return 0;
 };
 
