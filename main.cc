@@ -1,53 +1,91 @@
-#include <stdio.h>
-#include <unistd.h>
+#include "global.h"
 
 #include "noid.h"
 
-class App{
-public:
-  App();
-  ~App();
-  void start();
-private:
-  int mainloop();
+#define TICKS 30 // number of seconds kernel runs.
 
-  static noid_lst *noids = 0;
+
+class kernel{
+
+  public:
+    kernel();
+    ~kernel();
+    void start();
+
+  private:
+    int mainloop();
+
+    static noid_lst *noids;
+
 };
 
-App::App()
+kernel::kernel()
 {
 };
 
-App::~App()
+kernel::~kernel()
 {
 };
 
-void App::start()
+void kernel::start()
 {
-  mainloop();
+  system("rm -rf ./quit.tmp"); // clear quit file
+
+  int p_id =0;
+		
+  p_id = fork();
+  if(p_id == 0)
+  {
+				//int c_char = 0;
+				
+				//c_char = getc(stdin);
+    system("/bin/sh");
+    return ;
+  }
+  else
+  {
+    mainloop();
+    return;
+  }
+  return;
 };
 
-int App::mainloop()
+int kernel::mainloop()
 {
   int b_while = 0;
 
   int ticks = 0;
-  while(b_while == 0)
-    {
-      ticks++;
-      sleep(1);
 
-      if(ticks == 30)
-	{
-	  b_while = 1;
-	}
+  while(b_while == 0)
+   {
+     FILE *t_file;
+				 		
+    if((t_file = fopen("./quit.tmp", "r") )!=0) // if we could open the file
+    {
+      fclose(t_file);
+      system("rm -rf ./quit.tmp");
+				 				
+      return 0;
     }
+    ticks++;
+    sleep(1);
+
+    if(ticks == TICKS)
+    {
+      b_while = 1;
+    }   
+  }
   return 0;
 };
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-  App *the_main_app = new App();
+  kernel *p_kernel;
+		
+  p_kernel = new kernel();
+		
+  p_kernel->start();
 
-  the_main_app->start();
-};
+  delete p_kernel;
+
+}
